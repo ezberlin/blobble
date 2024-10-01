@@ -98,6 +98,7 @@ As blobs can only be created out of other blobs, here is a standard library for 
 
 ### Programming Utilities
 
+- **get(str)**: Log a String to the standard output and get a string as a response
 - **log(str)**: Log a String to the standard output
 - **comment(|#)**: Comment with letters
 
