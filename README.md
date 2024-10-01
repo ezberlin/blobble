@@ -128,12 +128,9 @@ Here's a quick overview of how to use Blobble:
 # Recursive Fibonacci Function
 (fib|
     (n|intOf())
-    if(eq(n ^0)) ^0
-    if(eq(n ^1)) ^1
-    add(
-        fib(sub(n, ^1))
-        fib(sub(n, ^2))
-    )
+    if(n=^0) ^0
+    if(n=^1) ^1
+    fib(n-^1)+fib(n-^2)
 )
 
 # Execute logging
