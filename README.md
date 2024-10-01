@@ -70,7 +70,7 @@ As blobs can only be created out of other blobs, here is a standard library for 
 - **listElement(list int)**: Get the element at the specified position
 
 - **type(type)**: Type type, consists of multiple blob definitions and inherits from the parameter type
-- **getProperties(null null|,)**: Get the value of properties with inter visibility of a blob
+- **getProperties(null null|,)**: Get the value of properties with inter or extra visibility of a blob
   
 - **null**: Null type / Null type creation 
 
@@ -142,7 +142,7 @@ Here's a quick overview of how to use Blobble:
 )
 
 # OOP-Blobs with type
-(pair|(first||null) (second||null) (contents|@(The Pair contains :first and :second)|string||inter)|type(null))
+(pair|(first||null) (second||null) (contents|@(The Pair contains :first and :second)||inter)|type(null))
 (myPair|pair(1 2))
 log(myPair,contents)
 
