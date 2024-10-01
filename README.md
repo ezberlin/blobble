@@ -75,26 +75,26 @@ Here's a quick overview of how to use Blobble:
 
 ```blobble
 // Define a string blob
-(greeting|str(Hello, Blobble!))
+(greeting|strOf("Hello, Blobble!"))
 
 // Log the greeting
 (logGreeting|log(greeting))
 
 // Define an integer blob
-(number|int(42))
+(number|intOf(42))
 
-// Define a function to double a value
-(doubleValue|mul(int(2))) // Doubles the input
+// Define a function to add 10 to a value
+(addTen|add(10)) // Doubles the input
 
-// Calculate the doubled value of 42
-(doubled|doubleValue(number)) 
+// Calculate 42 plus 10
+(added|addTen(number)) 
 
 // Log the results
-(logDoubled|log(doubled))
+(logAdded|log(added))
 
 // Execute logging
 logGreeting()  // Outputs: "Hello, Blobble!"
-logDoubled()   // Outputs: "84"
+logAdded()   // Outputs: "52"
 ```
 
 ## Contributing
