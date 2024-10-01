@@ -19,13 +19,14 @@ Blobble operates on the principle that every piece of data can be encapsulated i
 
 ## Blob Definition
 
-A blob is generally defined using the following pattern:
+A blob can exist in the main file or inside of another blob is generally defined using the following pattern:
 
-` (name|value|type|visibility) `
+` (name|value|type|sugar|visibility) `
 
 - **name**: The identifier for the blob.
 - **value**: The data or expression contained in the blob. If arguments of a blob which is in this value aren't set, they are passed as arguments by the entire blob, based on the order in code.
 - **type**: The type of the blob, also in form of a blob. Can be omitted when type can be inferred by the value.
+- **sugar**: An optional way to make your blobs with one or two parameters more concise by putting a non-alphanumeric character as an operator in front or between the parameter(s).
 - **visibility**: The visibility when its file is imported using the import() blob. Defaults to private().
 
 When a blob is defined another time with the same name, the old definition is overwritten.
@@ -42,67 +43,109 @@ Blobs can be invoked using:
 
 As blobs can only be created out of other blobs, here is a standard library for Blobble:
 
+### Types
+
 - **int**: Integer type
-- **intOf()**: Integer type creation with digits
+- **intOf(|^)**: Integer type creation with digits
 - **toInt(float)**: Float to integer (decimal places get cut)
+  
 - **float**: Float type
-- **floatOf()**: Float type creation with digits and decimal point
+- **floatOf(|~)**: Float type creation with digits and decimal point
 - **toFloat(int)**: Integer to float
-- **add(float float)**: Add two floats together
+  
 - **char**: Character type
-- **charOf()**: Character type creation with letters
+- **charOf(|')**: Character type creation with letters
+  
 - **str**: String type
-- **strOf()**: String type creation with letters
+- **strOf(|@)**: String type creation with letters
 - **toStr(null)**: Create a string out of any other type
+  
 - **bool**: Boolean type
-- **boolOf()**: Boolean type creation (` true `/` false`)
+- **boolOf(|?)**: Boolean type creation (` true `/` false`)
 - **list(type)**: List type
 - **listOf()**: List type creation with as many arguments as you want
 - **listElement(list int)**: Get the element at the specified position
 - **null**: Null type / Null type creation 
+
+### Control Structures
+
 - **if(bool null)**: If-Statement, the null blob only gets executed when bool is ` true `
 - **while(bool null)**: While-Statement, the null blob gets executed as long as bool is ` true `
 - **for(list null(index))**: For-Statement, the null blob gets executed for each iteration of the list with the index
-- **log(str)**: Log a String to the standard output
-- **comment()**: Comment with letters
+
+### Math & Logic
+
+- **add(number number|+)**: Add two numbers together
+- **sub(number number|-)**: Subtract two numbers together
+- **mul(number number|*)**: Multiply two numbers together
+- **div(number number|/)**: Divide two numbers together
+- **mod(number number|%)**: Take the modulo of the numbers
+
+
+- **eq(null null|=)**: Check if two numbers are equal
+- **smaller(number number|<)**: Check if the first number is smaller than the second
+- **larger(number number|>)**: Check if the first number is larger than the second
+
+- **not(bool|!)**: Invert a boolean
+- **and(bool bool|&)**: Logical And
+- **or(bool bool|")**: Logical Or
+
+### Importing
+
 - **intra**: When set as visibility, the blob will not be imported
 - **inter**: When set as visibility, the blob will be imported
 - **import(string)**: Import all inter-visible blobs from a specified file (relative path)
+
+### Programming Utilities
+
+- **log(str)**: Log a String to the standard output
+- **comment(|#)**: Comment with letters
 
 ## Examples
 
 Here's a quick overview of how to use Blobble:
 
 ```blobble
-// Define a string blob
-(greeting|strOf("Hello, Blobble!"))
+# Define a string blob
+(greeting|@(Hello, Blobble!))
 
-// Log the greeting
+# Log the greeting
 (logGreeting|log(greeting))
 
-// Define an integer blob
-(number|intOf(42))
+# Define an integer blob
+(integer|^42)
 
-// Define a function to add 10 to a value
-(addTen|add(10)) // Doubles the input
+# Define a function to add 10 to a value
+(addTen|add(^10))
 
-// Calculate 42 plus 10
-(added|addTen(number)) 
+# Calculate 42 plus 10
+(added|addTen(integer)) 
 
-// Log the results
+# Log the results
 (logAdded|log(added))
 
-// Execute logging
-logGreeting()  // Outputs: "Hello, Blobble!"
-logAdded()   // Outputs: "52"
+# Recursive Fibonacci Function
+(fib|
+    (n|intOf())
+    if(eq(n ^0)) ^0
+    if(eq(n ^1)) ^1
+    add(
+        fib(sub(n, ^1))
+        fib(sub(n, ^2))
+    )
+)
+
+# Execute logging
+logGreeting()              # Outputs: "Hello, Blobble!"
+if(integer>^50 logAdded()) # Outputs: 52
+log(fib(10))               # Outputs: 34
+
 ```
 
 ## Contributing
 
-pls help me with the concept ive got no idea what im doing :3
+pls help me with the concept ive got no idea what im doin :3
 
 ## License
 
 This project is licensed under the Apache 2.0 License. See the LICENSE file for more details.
-
-
