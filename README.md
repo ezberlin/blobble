@@ -21,13 +21,13 @@ Blobble operates on the principle that every piece of data can be encapsulated i
 
 A blob can exist in the main file or inside of another blob is generally defined using the following pattern:
 
-` (name|value|type|sugar|visibility) `
+` (name|value|type|visibility|sugar) `
 
 - **name**: The identifier for the blob.
 - **value**: The data or expression contained in the blob. If arguments of a blob which is in this value aren't set, they are passed as arguments by the entire blob, based on the order in code.
 - **type**: The type of the blob, also in form of a blob. Can be omitted when type can be inferred by the value.
-- **sugar**: An optional way to make your blobs with one or two parameters more concise by putting a non-alphanumeric character as an operator in front or between the parameter(s).
 - **visibility**: The visibility when its file is imported using the import() blob. Defaults to private().
+- **sugar**: An optional way to make your blobs with one or two parameters more concise by putting a non-alphanumeric character as an operator in front or between the parameter(s).
 
 When a blob is defined another time with the same name, the old definition is overwritten.
 
@@ -59,12 +59,19 @@ As blobs can only be created out of other blobs, here is a standard library for 
 - **str**: String type
 - **strOf(|@)**: String type creation with letters
 - **toStr(null)**: Create a string out of any other type
+- **embedOf(null|:)**: The contents of this function can be directly embedded into a string
+- **strOf(|@)**: String type creation with letters
   
 - **bool**: Boolean type
 - **boolOf(|?)**: Boolean type creation (` true `/` false`)
+  
 - **list(type)**: List type
 - **listOf()**: List type creation with as many arguments as you want
 - **listElement(list int)**: Get the element at the specified position
+
+- **type(type)**: Type type, consists of multiple blob definitions and inherits from the parameter type
+- **getProperties(null null|,)**: Get the value of properties with inter visibility of a blob
+  
 - **null**: Null type / Null type creation 
 
 ### Control Structures
@@ -90,10 +97,11 @@ As blobs can only be created out of other blobs, here is a standard library for 
 - **and(bool bool|&)**: Logical And
 - **or(bool bool|")**: Logical Or
 
-### Importing
+### Importing & Visibility
 
-- **intra**: When set as visibility, the blob will not be imported
-- **inter**: When set as visibility, the blob will be imported
+- **intra**: When set as visibility, the blob will not be imported and not visible outside of objects
+- **inter**: When set as visibility, the blob will not be imported but visible outside of objects
+- **extra**: When set as visibility, the blob will be imported and visible outside of objects
 - **import(string)**: Import all inter-visible blobs from a specified file (relative path)
 
 ### Programming Utilities
@@ -110,8 +118,8 @@ Here's a quick overview of how to use Blobble:
 # Define a string blob
 (greeting|@(Hello, Blobble!))
 
-# Log the greeting
-(logGreeting|log(greeting))
+# Log the greeting in an embedded string
+(logGreeting|log(@(My greeting is :greeting!)))
 
 # Define an integer blob
 (integer|^42)
@@ -132,6 +140,11 @@ Here's a quick overview of how to use Blobble:
     if(n=^1) ^1
     fib(n-^1)+fib(n-^2)
 )
+
+# OOP-Blobs with type
+(pair|(first||null) (second||null) (contents|@(The Pair contains :first and :second)|string||inter)|type(null))
+(myPair|pair(1 2))
+log(myPair,contents)
 
 # Execute logging
 logGreeting()              # Outputs: "Hello, Blobble!"
