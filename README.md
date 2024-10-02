@@ -155,7 +155,7 @@ log(fib(10))               # Outputs: 34
 
 ## Contributing
 
-pls help me with the concept ive got no idea what im doin :3
+pls help me with the concept I've got no idea what im doin :3
 
 ## License
 
